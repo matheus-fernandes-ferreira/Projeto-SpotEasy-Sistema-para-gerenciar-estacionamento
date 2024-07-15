@@ -1,0 +1,35 @@
+* {
+    padding: 0;
+    margin: 0;
+  }
+  
+  html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 62.5%;
+    background-color: #011826;
+  }
+.cadastrar-main{
+    width: 100vw;
+    height: 100vh;
+}
+.container-dash-RT{
+    width: 100%;
+    height: 20%;
+    background-color: #cdcdcd;
+}
+
+
+
+
+
+
+.side-bar{
+    width: 20%;
+    height: 100%;
+    background-color: #001107;
+}
+
+.botoes-navegacao{
+    display: flex;
+    flex-direction: column;
+}
