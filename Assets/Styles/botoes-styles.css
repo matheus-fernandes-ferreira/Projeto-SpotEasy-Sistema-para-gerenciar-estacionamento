@@ -4,10 +4,22 @@
     display: none;
   }
   
+#menu-hamburguer{
+  width: max-content;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#icone-hamburguer{
+  width: 60px;
+  border: none;
+}
+
   .toggle {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -66,7 +78,7 @@
 
 .icone-btn {
     width: 20%;
-    height: 94%;
+    height: 100%;
     border-right: 1px solid white;
     display: flex;
     justify-content: center;
@@ -82,37 +94,28 @@
     padding-left: 20px;
 }
 .nome-botao span{
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .btn-nav,
 .btn-nav::after {
-    height: 100px;
+    height: 40px;
     display: flex;
     flex-direction: row;
-    margin-left: 10px;
     padding: 0px;
-    padding: 10px 20px;
     font-size: 20px;
     border: none;
     border-radius: 5px;
     color: white;
     background-color: transparent;
     position: relative;
+    margin: 10px;
+    transition: 300ms;
 }
-
-
-
-.btn-nav:hover::after {
-    text-shadow: -3px -3px 0px #1df2f0, 3px 3px 0px #E94BE8;
-    background-color: transparent;
-    border: 3px solid rgb(0, 255, 213);
-}
-
-
 
 .btn-nav:hover {
-    background-color: transparent;
-    border: 1px solid rgb(0, 255, 213);
-    box-shadow: 0px 10px 10px -10px rgb(0, 255, 213);
+    background-color: #F28A2E;
+    border: 1px solid #F28A2E;
+    box-shadow: 0px 10px 10px -10px #F28A2E;
+    transition: 300ms;
 }
