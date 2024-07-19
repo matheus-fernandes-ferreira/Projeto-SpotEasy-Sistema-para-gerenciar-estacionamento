@@ -1,53 +1,317 @@
-* {
-    padding: 0;
-    margin: 0;
-  }
-  
-  html {
-    font-family: Arial, Helvetica, sans-serif;
+html {
+    font-family: "Chakra Petch", sans-serif;
     font-size: 62.5%;
     background-color: #40223B;
-  }
-
-.cadastrar-main{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
 }
 
-.side-bar{
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+.cadastrar-main {
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    background-color: yellow;
+}
+
+.side-bar {
     width: 265px;
     height: 100%;
     background-color: #40223B;
 }
-.botoes-navegacao{
+
+.botoes-navegacao {
     display: flex;
     flex-direction: column;
 }
-.main-content{
+
+.main-content {
     display: flex;
     flex-direction: row;
 }
-.painel{
+
+.painel {
     display: flex;
     flex-direction: column;
 }
-.container-dash-RT{
+
+.container-dash-RT {
     width: 100em;
     height: 10%;
     background-color: #40223B;
     display: flex;
 }
 
-.content{
+.content {
     width: 100%;
     height: 90%;
     background-color: #cdcdcd;
     border: 1px solid white;
     border-radius: 20px;
 }
-.dash{
+
+.dash {
     width: 50px;
-    border: 1px solid white;
+    border: 1px solid rgb(255, 255, 255);
     margin: 10px;
+}
+
+
+/*=================== Início formulário de registro de entrada */
+
+.formulario-registro {
+    width: 50%;
+    height: 100%;
+    background-color: red;
+}
+
+.form {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.title {
+    font-size: 28px;
+    color: #B06DF0;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+
+.title::before,
+.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0px;
+    background-color: #B06DF0;
+}
+
+.title::before {
+    width: 18px;
+    height: 18px;
+    background-color: #B06DF0;
+}
+
+.title::after {
+    width: 18px;
+    height: 18px;
+    animation: pulse 1s linear infinite;
+}
+
+.message,
+.signin {
+    color: rgba(88, 87, 87, 0.822);
+    font-size: 14px;
+}
+
+.signin {
+    text-align: center;
+}
+
+.signin a {
+    color: #B06DF0;
+}
+
+.signin a:hover {
+    text-decoration: underline royalblue;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+}
+
+.form label {
+    position: relative;
+}
+
+.form label .input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+}
+
+.form label .input+span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown+span {
+    top: 15px;
+    font-size: 0.9em;
+}
+
+.form label .input:focus+span,
+.form label .input:valid+span {
+    top: 30px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+.form label .input:valid+span {
+    color: green;
+}
+
+.submit {
+    border: none;
+    outline: none;
+    background-color: #B06DF0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
+}
+
+.submit:hover {
+    background-color: #B06DF0;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(0.9);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+
+/* ===================opcoes de veiculos */
+.radio-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 350px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.radio-inputs>* {
+    margin: 6px;
+}
+
+.radio-input:checked+.radio-tile {
+    border-color: #B06DF0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #B06DF0;
+}
+
+.radio-input:checked+.radio-tile:before {
+    transform: scale(1);
+    opacity: 1;
+    background-color: #B06DF0;
+    border-color: #B06DF0;
+}
+
+.radio-input:checked+.radio-tile .radio-icon svg {
+    fill: #B06DF0;
+}
+
+.radio-input:checked+.radio-tile .radio-label {
+    color: #B06DF0;
+}
+
+.radio-input:focus+.radio-tile {
+    border-color: #B06DF0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+}
+
+.radio-input:focus+.radio-tile:before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.radio-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    min-height: 80px;
+    border-radius: 0.5rem;
+    border: 2px solid #b5bfd9;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.15s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.radio-tile:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid #b5bfd9;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 0.25rem;
+    left: 0.25rem;
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.25s ease;
+}
+
+.radio-tile:hover {
+    border-color: #B06DF0;
+}
+
+.radio-tile:hover:before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.radio-icon svg {
+    width: 2rem;
+    height: 2rem;
+    fill: #494949;
+}
+
+.radio-label {
+    color: #707070;
+    transition: 0.375s ease;
+    text-align: center;
+    font-size: 13px;
+}
+
+.radio-input {
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(100%);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 }

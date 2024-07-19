@@ -1,121 +1,127 @@
 /*  botoes navegação*/
 /* menu hamburguer */
 #checkbox {
-    display: none;
-  }
-  
-#menu-hamburguer{
+  display: none;
+}
+
+#menu-hamburguer {
   width: max-content;
   height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#icone-hamburguer{
+
+#icone-hamburguer {
   width: 60px;
   border: none;
 }
 
-  .toggle {
-    position: relative;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition-duration: .5s;
-  }
-  
-  .bars {
-    width: 100%;
-    height: 4px;
-    background-color: white;
-    border-radius: 4px;
-  }
-  
-  #bar2 {
-    transition-duration: .8s;
-  }
-  
-  #bar1,#bar3 {
-    width: 70%;
-  }
-  
-  #checkbox:checked + .toggle .bars {
-    position: absolute;
-    transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle #bar2 {
-    transform: scaleX(0);
-    transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle #bar1 {
-    width: 100%;
-    transform: rotate(45deg);
-    transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle #bar3 {
-    width: 100%;
-    transform: rotate(-45deg);
-    transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle {
-    transition-duration: .5s;
-    transform: rotate(180deg);
-  }
+.toggle {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition-duration: .5s;
+}
 
-#menu-hamburguer{
-    border: none;
+.bars {
+  width: 100%;
+  height: 4px;
+  background-color: white;
+  border-radius: 4px;
+}
+
+#bar2 {
+  transition-duration: .8s;
+}
+
+#bar1,
+#bar3 {
+  width: 70%;
+}
+
+#checkbox:checked+.toggle .bars {
+  position: absolute;
+  transition-duration: .5s;
+}
+
+#checkbox:checked+.toggle #bar2 {
+  transform: scaleX(0);
+  transition-duration: .5s;
+}
+
+#checkbox:checked+.toggle #bar1 {
+  width: 100%;
+  transform: rotate(45deg);
+  transition-duration: .5s;
+}
+
+#checkbox:checked+.toggle #bar3 {
+  width: 100%;
+  transform: rotate(-45deg);
+  transition-duration: .5s;
+}
+
+#checkbox:checked+.toggle {
+  transition-duration: .5s;
+  transform: rotate(180deg);
+}
+
+#menu-hamburguer {
+  border: none;
 }
 
 
 .icone-btn {
-    width: 20%;
-    height: 100%;
-    border-right: 1px solid white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 20px;
+  width: 20%;
+  height: 100%;
+  border-right: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 20px;
 }
-.nome-botao{
-    width: 80%;
-    height: 94%;
-    display: flex;
-    justify-content: c;
-    align-items: center;
-    padding-left: 20px;
+
+.nome-botao {
+  width: 80%;
+  height: 94%;
+  display: flex;
+  justify-content: c;
+  align-items: center;
+  padding-left: 20px;
 }
-.nome-botao span{
-    font-size: 2rem;
+
+.nome-botao span {
+  font-size: 2rem;
 }
 
 .btn-nav,
 .btn-nav::after {
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    padding: 0px;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    background-color: transparent;
-    position: relative;
-    margin: 10px;
-    transition: 300ms;
+  font-family: "Chakra Petch", sans-serif;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: transparent;
+  position: relative;
+  margin: 10px;
+  transition: 300ms;
 }
 
 .btn-nav:hover {
-    background-color: #F28A2E;
-    border: 1px solid #F28A2E;
-    box-shadow: 0px 10px 10px -10px #F28A2E;
-    transition: 300ms;
+  background-color: #F28A2E;
+  border: 1px solid #F28A2E;
+  box-shadow: 0px 10px 10px -10px #F28A2E;
+  transition: 300ms;
 }
+
