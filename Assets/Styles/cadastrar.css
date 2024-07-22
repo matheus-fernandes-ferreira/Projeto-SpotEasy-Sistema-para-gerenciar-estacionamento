@@ -17,7 +17,7 @@ body {
 }
 
 .side-bar {
-    width: 265px;
+    width: 20vw;
     height: 100%;
     background-color: #40223B;
 }
@@ -33,13 +33,15 @@ body {
 }
 
 .painel {
+    width: 80vw;
+
     display: flex;
     flex-direction: column;
 }
 
 .container-dash-RT {
-    width: 100em;
-    height: 10%;
+    width: 100%;
+    height: 20%;
     background-color: #40223B;
     display: flex;
 }
@@ -47,6 +49,7 @@ body {
 .content {
     width: 100%;
     height: 90%;
+    display: flex;
     background-color: #cdcdcd;
     border: 1px solid white;
     border-radius: 20px;
@@ -59,21 +62,123 @@ body {
 }
 
 
+/*=================== Abas*/
+
+.abas {
+    width: 100%;
+    height: 50px;
+    background-color: orange;
+    gap: 3.3%;
+    display: flex;
+    flex-direction: row;
+}
+
+.aba-1 {
+    width: 33%;
+    height: 100%;
+    background-color: green;
+}
+
+.aba-2 {
+    width: 33%;
+    height: 100%;
+    background-color: green;
+}
+
+.aba-3 {
+    width: 33%;
+    height: 100%;
+    background-color: green;
+}
+
+
+/*===================Barra de pesquisa */
+.ui-input-container {
+    position: relative;
+    width: 90%
+}
+
+.ui-input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    font-size: 1em;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    background-color: transparent;
+    transition: border-color 0.3s;
+}
+
+.ui-input:focus {
+    border-color: #B06DF0;
+}
+
+.ui-input-underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #B06DF0;
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.ui-input:focus+.ui-input-underline {
+    transform: scaleX(1);
+}
+
+.ui-input-highlight {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: rgba(176, 109, 240, 0.2);
+    transition: width 0.3s;
+}
+
+.ui-input:focus~.ui-input-highlight {
+    width: 100%;
+}
+
+.ui-input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    transition: color 0.3s;
+}
+
+.ui-input:focus~.ui-input-icon {
+    color: #B06DF0;
+}
+
+.ui-input-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+
 /*=================== Início formulário de registro de entrada */
 
 .formulario-registro {
     width: 50%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: red;
 }
 
 .form {
     width: 100%;
-    height: 70%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 350px;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 20px;
@@ -81,7 +186,7 @@ body {
 }
 
 .title {
-    font-size: 28px;
+    font-size: 2.8rem;
     color: #B06DF0;
     font-weight: 600;
     letter-spacing: -1px;
@@ -114,26 +219,28 @@ body {
     animation: pulse 1s linear infinite;
 }
 
-.message,
-.signin {
+.message {
     color: rgba(88, 87, 87, 0.822);
     font-size: 14px;
 }
 
-.signin {
-    text-align: center;
+.input-group {
+    gap: 10px;
 }
 
-.signin a {
-    color: #B06DF0;
-}
 
-.signin a:hover {
-    text-decoration: underline royalblue;
+
+
+.noflex {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
 }
 
 .flex {
     display: flex;
+    flex-direction: row;
     width: 100%;
     gap: 6px;
 }
@@ -155,7 +262,7 @@ body {
     left: 10px;
     top: 15px;
     color: grey;
-    font-size: 0.9em;
+    font-size: 1.6rem;
     cursor: text;
     transition: 0.3s ease;
 }
@@ -191,17 +298,7 @@ body {
     background-color: #B06DF0;
 }
 
-@keyframes pulse {
-    from {
-        transform: scale(0.9);
-        opacity: 1;
-    }
 
-    to {
-        transform: scale(1.8);
-        opacity: 0;
-    }
-}
 
 
 /* ===================opcoes de veiculos */
@@ -314,4 +411,23 @@ body {
     position: absolute;
     white-space: nowrap;
     width: 1px;
+}
+
+.mapa{
+    width: 50%;
+    height: 100%;
+
+}
+.container-mapa{
+    width: 300px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);    
+    gap: 5px;
+}
+.vaga{
+    width:30px;
+    height: 30px;
+    border-radius: 20px;
+    box-sizing: 1px solid white;
+    background-color: rgb(255, 0, 0);
 }
