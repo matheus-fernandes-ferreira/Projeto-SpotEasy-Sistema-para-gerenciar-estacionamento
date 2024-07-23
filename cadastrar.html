@@ -135,7 +135,7 @@
 
                     <div class="formulario-registro">
 
-                        <form class="form">
+                        <form class="form" id="formulario-registro">
                             <!-- ===========================Barra de pesquisa -->
                             <div class="ui-input-container">
                                 <input placeholder="Buscar placa ou CPF" class="ui-input" type="text" />
@@ -159,43 +159,42 @@
                             <div class="input-group">
 
                                 <div class="noflex">
-                                    <label>
-                                        <input required="" placeholder="" type="text" class="input">
+                                    <label for="proprietario">
+                                        <input required="" placeholder="" type="text" class="input" id="proprietario">
                                         <span>Proprietário</span>
                                     </label>
 
                                 </div>
                                 <div class="flex">
-                                    <label>
-                                        <input required="" placeholder="" type="text" class="input">
+                                    <label for="cpf">
+                                        <input required="" placeholder="" type="text" class="input" id="cpf">
                                         <span>CPF</span>
                                     </label>
 
-                                    <label>
-                                        <input required="" placeholder="" type="text" class="input">
+                                    <label for="telefone">
+                                        <input required="" placeholder="" type="text" class="input" id="telefone">
                                         <span>Telefone</span>
                                     </label>
                                 </div>
                             </div>
 
                             <div class="flex">
-                                <label>
-                                    <input required="" placeholder="" type="text" class="input">
+                                <label for="placa">
+                                    <input required="" placeholder="" type="text" class="input" id="placa">
                                     <span>Placa</span>
                                 </label>
 
-                                <label>
-                                    <input required="" placeholder="" type="text" class="input">
+                                <label for="modelo">
+                                    <input required="" placeholder="" type="text" class="input" id="modelo">
                                     <span>Modelo</span>
                                 </label>
 
-                                <label>
-                                    <input required="" placeholder="" type="text" class="input">
+                                <label for="Cor>
+                                    <input required="" placeholder="" type="text" class="input" id="cor">
                                     <span>Cor</span>
                                 </label>
 
                             </div>
-
 
 
                             <div class="radio-inputs">
@@ -260,9 +259,22 @@
                         </form>
 
                     </div>
-                    <div class="mapa">
-                        <div class="container-mapa">
-                            
+                    <div class="lista-registros">
+                        <div class="container-lista-registro">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Proprietário</th>
+                                        <th>CPF</th>
+                                        <th>Telefone</th>
+                                        <th>Placa</th>
+                                        <th>Modelo</th>
+                                        <th>Cor</th>
+                                        <th>Veículo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-corpo"></tbody>
+                            </table>
                             
 
 

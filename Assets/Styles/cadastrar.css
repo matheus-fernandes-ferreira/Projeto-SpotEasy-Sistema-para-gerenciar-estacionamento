@@ -418,16 +418,3 @@ body {
     height: 100%;
 
 }
-.container-mapa{
-    width: 300px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);    
-    gap: 5px;
-}
-.vaga{
-    width:30px;
-    height: 30px;
-    border-radius: 20px;
-    box-sizing: 1px solid white;
-    background-color: rgb(255, 0, 0);
-}
