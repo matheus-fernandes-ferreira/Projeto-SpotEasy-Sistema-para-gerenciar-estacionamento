@@ -416,12 +416,13 @@ body {
 
 
 /* ========================tabela registros */
-.nav-lista-registro{
+.nav-lista-registro {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.btn-lista{
+
+.btn-lista {
     font-family: "Chakra Petch", sans-serif;
     height: 34px;
     display: flex;
@@ -438,15 +439,17 @@ body {
     transition: 300ms;
 
 }
-.btn-lista:hover{
+
+.btn-lista:hover {
     background-color: rgba(176, 109, 240, 0.25);
     color: #40223B;
 }
 
-.ui-input-container-lista{
+.ui-input-container-lista {
     position: relative;
     flex: 1;
 }
+
 .lista-registros {
     width: 65%;
     display: flex;
@@ -477,6 +480,7 @@ body {
     display: flex;
     flex-direction: row;
 }
+
 .tabela-row:hover {
     background-color: rgba(255, 127, 80, 0.2);
 }
