@@ -50,8 +50,7 @@ body {
     width: 100%;
     height: 90%;
     display: flex;
-    background-color: #cdcdcd;
-    border: 1px solid white;
+    background-color: white;
     border-radius: 20px;
 }
 
@@ -76,19 +75,20 @@ body {
 .aba-1 {
     width: 33%;
     height: 100%;
-    background-color: green;
+    border: 1px solid blue;
 }
 
 .aba-2 {
     width: 33%;
     height: 100%;
-    background-color: green;
+    border: 1px solid red;
+}
 }
 
 .aba-3 {
     width: 33%;
     height: 100%;
-    background-color: green;
+    border: 1px solid black;
 }
 
 
@@ -165,12 +165,11 @@ body {
 /*=================== Início formulário de registro de entrada */
 
 .formulario-registro {
-    width: 50%;
+    width: 35%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
 }
 
 .form {
@@ -292,10 +291,12 @@ body {
     color: #fff;
     font-size: 16px;
     transform: .3s ease;
+    transition: 300ms;
 }
 
 .submit:hover {
-    background-color: #B06DF0;
+    background-color: #F28A2E;
+    transition: 300ms;
 }
 
 
@@ -318,29 +319,29 @@ body {
 }
 
 .radio-input:checked+.radio-tile {
-    border-color: #B06DF0;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    color: #B06DF0;
+    border-color: #F28A2E;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    color: #F28A2E;
 }
 
 .radio-input:checked+.radio-tile:before {
     transform: scale(1);
     opacity: 1;
-    background-color: #B06DF0;
-    border-color: #B06DF0;
+    background-color: #F28A2E;
+    border-color: #F28A2E;
 }
 
 .radio-input:checked+.radio-tile .radio-icon svg {
-    fill: #B06DF0;
+    fill: #F28A2E;
 }
 
 .radio-input:checked+.radio-tile .radio-label {
-    color: #B06DF0;
+    color: #F28A2E;
 }
 
 .radio-input:focus+.radio-tile {
-    border-color: #B06DF0;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+    border-color: #F28A2E;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #f4caa6;
 }
 
 .radio-input:focus+.radio-tile:before {
@@ -381,7 +382,7 @@ body {
 }
 
 .radio-tile:hover {
-    border-color: #B06DF0;
+    border-color: #F28A2E;
 }
 
 .radio-tile:hover:before {
@@ -413,8 +414,83 @@ body {
     width: 1px;
 }
 
-.mapa{
-    width: 50%;
-    height: 100%;
+
+/* ========================tabela registros */
+.nav-lista-registro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-lista{
+    font-family: "Chakra Petch", sans-serif;
+    height: 34px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    border: none;
+    width: 100px;
+    color: #ccc;
+    background-color: transparent;
+    position: relative;
+    transition: 300ms;
+
+}
+.btn-lista:hover{
+    background-color: rgba(176, 109, 240, 0.25);
+    color: #40223B;
+}
+
+.ui-input-container-lista{
+    position: relative;
+    flex: 1;
+}
+.lista-registros {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+
+}
+
+.tabela-header {
+    display: flex;
+}
+
+.coluna-header {
+    height: 45px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid rgba(105, 105, 105, 0.397);
+    font-size: 1.4rem;
+    color: #B06DF0;
+    font-weight: 700;
+}
+
+.tabela-row {
+    display: flex;
+    flex-direction: row;
+}
+.tabela-row:hover {
+    background-color: rgba(255, 127, 80, 0.2);
+}
+
+.cella-coluna-row {
+    height: 35px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    border-bottom: 1px solid rgba(105, 105, 105, 0.397);
+    font-size: 1.3rem;
+
 
 }

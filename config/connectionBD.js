@@ -10,3 +10,17 @@
 
 // module.exports = pool;
 
+const {Pool, Client} = require('pg')
+const conectionString = 'postgressql://postgres:BemVindo!@localhost:5432/SpotEasy_DB'
+
+const client = new Client({
+    conectionString:conectionString
+})
+
+client.connect()
+
+client.query('SELECT * FROM Veiculo', (err, res) => {
+    console.log(err, res)
+    client.end()
+
+})
