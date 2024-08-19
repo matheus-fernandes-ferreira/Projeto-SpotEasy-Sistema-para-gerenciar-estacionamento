@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpotEasy</title>
+
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://unpkg.com;"> -->
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="./assets/css/photon.css">
+  <link rel="stylesheet" href="./assets/css/photon.min.css">
+  <link rel="stylesheet" href="./assets/css/styles.css">
+
+  <!-- Javascript -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+  <script defer src="../public/assets/js/exportarCSV.js"></script>
+  <script defer src="../public/assets/js/script-mapa.js"></script>
+  <script defer src="../public/assets/js/dbSheet.js"></script>
+  <script defer src="./assets/js/script.js"></script>
+  <script defer src="./assets/js/chat.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+
+
+</head>
+
+<body>
+  <div class="window">
+
+    <div class="window-content">
+      <!-- ======================= NAV SIDE BAR =======================  -->
+
+      <div class="pane-group">
+        <div class="pane-sm sidebar">
+          <div class="logo">
+            <h3>SpotEasy</h3>
+
+          </div>
+
+          <nav class="nav-group">
+            <h5 class="nav-group-title"></h5>
+
+            <a class="nav-group-item" id="inicio">
+              <span class="icon icon-home"></span>
+              Início
+            </a>
+            <span class="nav-group-item" id="nav-checkin">
+              <span class="icon icon-book-open"></span>
+              Check-in/check-out
+            </span>
+            <span class="nav-group-item" id="nav-veiculos">
+              <span class="icon icon-folder"></span>
+              Veículos
+            </span>
+            <span class="nav-group-item" id="nav-relatorios">
+              <span class="icon icon-chart-bar"></span>
+              Relatórios
+            </span>
+            <span class="nav-group-item" id="nav-configuraçoes">
+              <span class="icon icon-cog"></span>
+              Configurações
+            </span>
+            <span class="nav-group-item" id="nav-logout">
+              <span class="icon icon-back"></span>
+              Logout
+            </span>
+        </div>
+
+        <!-- ======================= FIM NAV SIDE BAR =======================  -->
+
+        <!-- ======================= HEADER ==================================  -->
+
+        <div class="pane" id="pane-header">
+
+          <header class="toolbar toolbar-header">
+            <h1 class="title">Dashboard </h1>
+
+            <div class="container-quadros">
+              <div class="quadros" id="q1">
+                <h3 id="texto-ocupacao"> </h3>
+                <div id="taxa-ocupacao">
+                  <h3>Taxa de ocupação</h3>
+                </div>
+              </div>
+              <div class="quadros" id="q2">
+                <div id="q2-container">
+                  <div id="q2-icone">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+                      class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                      <path
+                        d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+                    </svg>
+                  </div>
+                  <div id="q2-info">
+                    <h3 id="info-moto"></h3>
+                  </div>
+                </div>
+                <div id="q2-container">
+                  <div id="q2-icone">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+                      class="bi bi-bicycle" viewBox="0 0 16 16">
+                      <path
+                        d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z" />
+                    </svg>
+                  </div>
+                  <div id="q2-info">
+                    <h3 id="info-carro"></h3>
+                  </div>
+                </div>
+                <div id="q2-container">
+                  <div id="q2-icone">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+                      class="bi bi-truck-front-fill" viewBox="0 0 16 16">
+                      <path
+                        d="M3.5 0A2.5 2.5 0 0 0 1 2.5v9c0 .818.393 1.544 1 2v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5V14h6v1.5a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2c.607-.456 1-1.182 1-2v-9A2.5 2.5 0 0 0 12.5 0zM3 3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3.9c0 .625-.562 1.092-1.17.994C10.925 7.747 9.208 7.5 8 7.5s-2.925.247-3.83.394A1.008 1.008 0 0 1 3 6.9zm1 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2m8 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2m-5-2h2a1 1 0 1 1 0 2H7a1 1 0 1 1 0-2" />
+                    </svg>
+                  </div>
+                  <div id="q2-info">
+                    <h3 id="info-micro"></h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="quadros" id="q3"></div>
+            </div>
+
+          </header>
+
+          <!-- ======================= FIM HEADER =======================  -->
+          <section class="main-content" id="inicio">
+
+          </section>
+
+          <section class="main-content" id="checkin">
+            <div class="pane" id="main-pane">
+
+              <div class="pane" id="pane-form">
+                <div class="tab-group">
+                  <div class="tab-item active">
+                    <span class="icon icon-cancel icon-close-tab"></span>
+                    Check-in
+                  </div>
+                  <div class="tab-item">
+                    <span class="icon icon-cancel icon-close-tab"></span>
+                    Clientes
+                  </div>
+                  <div class="tab-item tab-item-fixed">
+                    <span class="icon icon-plus"></span>
+                  </div>
+                </div>
+
+
+
+                <!-- ======================= FORMULARIO =======================  -->
+                <div class="pane" id="container-form">
+                  <H3>Check-in</H3>
+                  <form id="formulario-veiculos">
+                    <div class="form-group">
+                      <label>Placa</label>
+                      <input type="text" class="form-control" placeholder="Placa do veículo" id="placa">
+                    </div>
+                    <div class="form-group">
+                      <label>Modelo</label>
+                      <input type="text" class="form-control" placeholder="Modelo do veículo" id="modelo">
+                    </div>
+                    <div class="form-group">
+                      <label>Cor</label>
+                      <input type="text" class="form-control" placeholder="Cor do veículo" id="cor">
+                    </div>
+
+                    <select class="form-control" id="tipo" name="tipo" required>
+
+                      <option value="carro">Carro</option>
+                      <option value="moto">Moto</option>
+                      <option value="microonibus">Microonibus</option>
+
+                    </select>
+                    <br>
+                    <br>
+                    <label>
+                      <div class="form-actions">
+                        <button class="btn btn-form btn-primary" id="btn-salvar">Salvar</button>
+                      </div>
+                  </form>
+
+                </div>
+              </div>
+              <div class="pane">
+                <div class="tab-group">
+                  <div class="tab-item nav-link">
+                    <span class="icon icon-cancel icon-close-tab active"></span>
+                    Atual
+                  </div>
+                  <div class="tab-item nav-link">
+                    <span class="icon icon-cancel icon-close-tab"></span>
+                    Histórico
+                  </div>
+                </div>
+
+                <div class="pane" id="container-tab">
+                  <div class="cabecalho-tabela">
+                    <div id="titulo-tab">
+                      <h3>Registros
+                      </h3>
+                    </div>
+                    <div class="btn-acoes-tab">
+                      <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"
+                        id="exportar-csv" autocomplete="off">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                          class="bi bi-filetype-csv" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd"
+                            d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM3.517 14.841a1.13 1.13 0 0 0 .401.823q.195.162.478.252.284.091.665.091.507 0 .859-.158.354-.158.539-.44.187-.284.187-.656 0-.336-.134-.56a1 1 0 0 0-.375-.357 2 2 0 0 0-.566-.21l-.621-.144a1 1 0 0 1-.404-.176.37.37 0 0 1-.144-.299q0-.234.185-.384.188-.152.512-.152.214 0 .37.068a.6.6 0 0 1 .246.181.56.56 0 0 1 .12.258h.75a1.1 1.1 0 0 0-.2-.566 1.2 1.2 0 0 0-.5-.41 1.8 1.8 0 0 0-.78-.152q-.439 0-.776.15-.337.149-.527.421-.19.273-.19.639 0 .302.122.524.124.223.352.367.228.143.539.213l.618.144q.31.073.463.193a.39.39 0 0 1 .152.326.5.5 0 0 1-.085.29.56.56 0 0 1-.255.193q-.167.07-.413.07-.175 0-.32-.04a.8.8 0 0 1-.248-.115.58.58 0 0 1-.255-.384zM.806 13.693q0-.373.102-.633a.87.87 0 0 1 .302-.399.8.8 0 0 1 .475-.137q.225 0 .398.097a.7.7 0 0 1 .272.26.85.85 0 0 1 .12.381h.765v-.072a1.33 1.33 0 0 0-.466-.964 1.4 1.4 0 0 0-.489-.272 1.8 1.8 0 0 0-.606-.097q-.534 0-.911.223-.375.222-.572.632-.195.41-.196.979v.498q0 .568.193.976.197.407.572.626.375.217.914.217.439 0 .785-.164t.55-.454a1.27 1.27 0 0 0 .226-.674v-.076h-.764a.8.8 0 0 1-.118.363.7.7 0 0 1-.272.25.9.9 0 0 1-.401.087.85.85 0 0 1-.478-.132.83.83 0 0 1-.299-.392 1.7 1.7 0 0 1-.102-.627zm8.239 2.238h-.953l-1.338-3.999h.917l.896 3.138h.038l.888-3.138h.879z" />
+                        </svg>
+                        Exportar</button>
+                    </div>
+
+
+                    <div class="btn-group">
+                      <button class="btn btn-default" id="limpar">
+                        <span class="icon icon-trash"></span>
+                      </button>
+                      <button class="btn btn-default btn-db" id="database">
+                        <span class="icon icon-database"></span>
+                      </button>
+                      <button class="btn btn-default btn-logout">
+                        <span class="icon icon-logout"></span>
+                      </button>
+                      <button class="btn btn-default">
+                        <span class="icon icon-popup"></span>
+                      </button>
+                      <button class="btn btn-default">
+                        <span class="icon icon-shuffle"></span>
+                      </button>
+                    </div>
+
+
+
+                  </div>
+                  <table class="table-striped" id="tabelaVeiculos">
+                    <thead>
+                      <tr>
+                        <th>Placa</th>
+                        <th>Modelo</th>
+                        <th>Cor</th>
+                        <th>Tipo de veículo</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Nº da vaga</th>
+                        <th>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- ========= HISTORICO ========== -->
+
+                <div class="pane" id="container-tab-historico">
+                  <div class="cabecalho-tabela">
+                    <div id="titulo-tab">
+                      <h3> Histórico </h3>
+                    </div>
+                    <div class="btn-acoes-tab">
+                      <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"
+                        id="exportar-csv" autocomplete="off">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                          class="bi bi-filetype-csv" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd"
+                            d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM3.517 14.841a1.13 1.13 0 0 0 .401.823q.195.162.478.252.284.091.665.091.507 0 .859-.158.354-.158.539-.44.187-.284.187-.656 0-.336-.134-.56a1 1 0 0 0-.375-.357 2 2 0 0 0-.566-.21l-.621-.144a1 1 0 0 1-.404-.176.37.37 0 0 1-.144-.299q0-.234.185-.384.188-.152.512-.152.214 0 .37.068a.6.6 0 0 1 .246.181.56.56 0 0 1 .12.258h.75a1.1 1.1 0 0 0-.2-.566 1.2 1.2 0 0 0-.5-.41 1.8 1.8 0 0 0-.78-.152q-.439 0-.776.15-.337.149-.527.421-.19.273-.19.639 0 .302.122.524.124.223.352.367.228.143.539.213l.618.144q.31.073.463.193a.39.39 0 0 1 .152.326.5.5 0 0 1-.085.29.56.56 0 0 1-.255.193q-.167.07-.413.07-.175 0-.32-.04a.8.8 0 0 1-.248-.115.58.58 0 0 1-.255-.384zM.806 13.693q0-.373.102-.633a.87.87 0 0 1 .302-.399.8.8 0 0 1 .475-.137q.225 0 .398.097a.7.7 0 0 1 .272.26.85.85 0 0 1 .12.381h.765v-.072a1.33 1.33 0 0 0-.466-.964 1.4 1.4 0 0 0-.489-.272 1.8 1.8 0 0 0-.606-.097q-.534 0-.911.223-.375.222-.572.632-.195.41-.196.979v.498q0 .568.193.976.197.407.572.626.375.217.914.217.439 0 .785-.164t.55-.454a1.27 1.27 0 0 0 .226-.674v-.076h-.764a.8.8 0 0 1-.118.363.7.7 0 0 1-.272.25.9.9 0 0 1-.401.087.85.85 0 0 1-.478-.132.83.83 0 0 1-.299-.392 1.7 1.7 0 0 1-.102-.627zm8.239 2.238h-.953l-1.338-3.999h.917l.896 3.138h.038l.888-3.138h.879z" />
+                        </svg>
+                        Exportar</button>
+                    </div>
+                    <div class="btn-group">
+                      <button class="btn btn-default">
+                        <span class="icon icon-home"></span>
+                      </button>
+                      <button class="btn btn-default">
+                        <span class="icon icon-folder"></span>
+                      </button>
+                      <button class="btn btn-default active">
+                        <span class="icon icon-cloud"></span>
+                      </button>
+                      <button class="btn btn-default">
+                        <span class="icon icon-popup"></span>
+                      </button>
+                      <button class="btn btn-default">
+                        <span class="icon icon-shuffle"></span>
+                      </button>
+                    </div>
+
+                  </div>
+                  <table class="table-striped" id="tabela-historico">
+                    <thead>
+                      <tr>
+                        <th>Placa</th>
+                        <th>Modelo</th>
+                        <th>Cor</th>
+                        <th>Tipo de veículo</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Nº da vaga</th>
+                        <th>Data saída</th>
+                        <th>Hora saída</th>
+                        <th>Permanencia</th>
+                        <th>Tarifa</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                  <div class="alert alert-success" id="myAlert" role="alert">
+                    Este é um alerta de sucesso!
+                  </div>
+
+
+                </div>
+
+
+
+              </div>
+
+
+
+            </div>
+          </section>
+          <section class="main-content" id="veiculos">
+
+          </section>
+
+          <section class="main-content" id="relatorios">
+
+          </section>
+
+          <section class="main-content" id="configuraçoes">
+            <div class="pane" id="pane-mapa">
+              <div class="tab-group">
+                <div class="tab-item active">
+                  <span class="icon icon-cancel icon-close-tab"></span>
+                  Vagas no estacionamento
+                </div>
+              </div>
+
+              <div id="gral">
+                <div class="container-info">
+                  <div class="config-info">
+                    <div class="container">
+                      <h3>Informações gerais</h3>
+                      <div id="config-mapa">
+                        <label for="vagasMotos">Vagas para Motos:</label>
+                        <input type="number" class="form-control" id="vagasMotos" min="1">
+                      </div>
+                      <div id="config-mapa">
+                        <label for="vagasCarros">Vagas para Carros:</label>
+                        <input type="number" class="form-control" id="vagasCarros" min="1">
+                      </div>
+                      <div id="config-mapa">
+                        <label for="vagasMicro">Vagas para Micro-ônibus:</label>
+                        <input type="number" class="form-control" id="vagasMicro" min="1">
+                      </div>
+
+                      <div class="pane" id="pane-mapa">
+                          <div class="container">
+                            <h3></h3>
+                            <div id="config-mapa">
+                              <label id="total-vagas"> </label>
+
+                              <label id="vagas-livres"> </label>
+
+                              <label id="vagas-ocupadas"> </label>
+
+                              <label id="taxaocupacao"> Taxa de ocupação</label>
+                            </div>
+
+                          </div>
+
+
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+              <button class="btn btn-form btn-primary" id="btn-criarMapa">Criar Mapa</button>
+              <div class="mapa" id="mapa"></div>
+
+              <div class="mapa" id="mapa">
+
+              </div>
+            </div>
+
+
+
+
+          </section>
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <footer class="toolbar toolbar-footer">
+      <h1 class="title">Desenvolvido por Matheus Fernandes</h1>
+    </footer>
+  </div>
+</body>
+
+<!-- You can also require other files to run in this process -->
+<!-- <script src="./renderer.js"></script> -->
+
+</html>
