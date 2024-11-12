@@ -108,8 +108,8 @@ function criarMapa() {
     salvarDados(); // Salva as informações de vagas após criar o mapa
 }
 
- //adiciona os valores no dash
-   
+//adiciona os valores no dash
+
 
 
 function salvarDados() {
@@ -149,7 +149,13 @@ function atualizarDashboard() {
     document.getElementById('total-vagas').innerHTML = `Total de vagas: ${totalVagas}`;
     document.getElementById('vagas-ocupadas').innerHTML = `Vagas ocupadas: ${vagasOcupadas}`;
     document.getElementById('vagas-livres').innerHTML = `Vagas livres: ${vagasLivres}`;
-    document.getElementById('taxaocupacao').innerHTML = `Taxa de ocupacao: ${ocupacao.toFixed(2)}%`;
+    
+    if ('taxaocupacao') {
+        document.getElementById('taxaocupacao').innerHTML = `Taxa de ocupacao: ${ocupacao.toFixed(2)}%`;
+    } else {
+        document.getElementById('taxaocupacao').innerHTML = '';
+
+    }
     document.getElementById('texto-ocupacao').textContent = `${ocupacao.toFixed(2)}%`;
 }
 
@@ -434,15 +440,15 @@ function enviarDadosParaSheetDB() {
         },
         body: dadosJson
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Dados enviados com sucesso:', data);
-        // Adicione aqui qualquer ação após o envio dos dados (ex: mostrar mensagem de sucesso)
-    })
-    .catch(error => {
-        console.error('Erro ao enviar dados:', error);
-        // Adicione aqui o tratamento de erros (ex: mostrar mensagem de erro ao usuário)
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Dados enviados com sucesso:', data);
+            // Adicione aqui qualquer ação após o envio dos dados (ex: mostrar mensagem de sucesso)
+        })
+        .catch(error => {
+            console.error('Erro ao enviar dados:', error);
+            // Adicione aqui o tratamento de erros (ex: mostrar mensagem de erro ao usuário)
+        });
 }
 
 

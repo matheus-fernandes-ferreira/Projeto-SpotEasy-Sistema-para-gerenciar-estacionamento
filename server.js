@@ -71,4 +71,5 @@ app.listen(3005, () => {
 
 
 //https://www.youtube.com/watch?v=PyrMT0GA3sE
+//https://www.youtube.com/watch?v=_gHr2Pe5LCY
 //extensão Thunder client para testar as rotas
