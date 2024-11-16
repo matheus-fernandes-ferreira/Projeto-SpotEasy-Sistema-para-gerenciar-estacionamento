@@ -16,16 +16,15 @@
   <link rel="stylesheet" href="./assets/css/styles.css">
 
   <!-- Javascript -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script defer src="../public/assets/js/exportarCSV.js"></script>
   <script defer src="../public/assets/js/script-mapa.js"></script>
-  <script defer src="../public/assets/js/dbSheet.js"></script>
+  <script defer src="../controllers/controller.js"></script>
+
   <script defer src="./assets/js/script.js"></script>
-  <script defer src="./assets/js/chat.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
 
 
 
@@ -245,10 +244,11 @@
                         <span class="icon icon-shuffle"></span>
                       </button>
                     </div>
-
-
-
                   </div>
+
+                  
+                  <!-- ========= TABELA ========== -->
+
                   <table class="table-striped" id="tabelaVeiculos">
                     <thead>
                       <tr>

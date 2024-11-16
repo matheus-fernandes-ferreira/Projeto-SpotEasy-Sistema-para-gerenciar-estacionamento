@@ -1,47 +1,73 @@
-// onst pool = require('../config/connectionBD');
-const path = require('path');
-
-// Rota para a página cadastrar entrada de veiculo
-const rotaCheckin = (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'));
-};
-
-// Registrar o checkin de um veiculo
-
-async function checkin(req, res) {
-    const {placa, modelo, cor, tipo, data, hora  } = req.body;
-
-    if (!placa) {
-        return res.status(400).json({ error: 'O campo título é obrigatório.' });
-    }
-
-    if (!modelo) {
-        return res.status(400).json({ error: 'O campo descrição é obrigatório.' });
-    }
-    if (!cor) {
-        return res.status(400).json({ error: 'O campo descrição é obrigatório.' });
-    }
-    if (!tipo) {
-        return res.status(400).json({ error: 'O campo descrição é obrigatório.' });
-    }
-    
+document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const resultado = await pool.query(
-            'INSERT INTO veiculo (placa, modelo, cor, tipo, data, hora) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-            [placa, modelo, cor, tipo, data, hora]
-        );
+        // URL da API 
+        const apiUrl = 'http://localhost:3005/veiculos';
 
+        // Faz a solicitação para obter os dados
+        const response = await axios.get(apiUrl);
+
+        // Obtém a lista de veículos
+        const veiculos = response.data;
+
+        // Seleciona o elemento onde os veículos serão exibidos
+        const veiculosContainer = document.getElementById('veiculos');
+        veiculosContainer.className = 'veiculos-container'; // Adiciona uma classe para estilos
+
+        // Gera o conteúdo HTML dinâmico
+        veiculos.forEach(veiculo => {
+            const veiculoCard = document.createElement('div');
+            veiculoCard.className = 'veiculo-card';
+
+            veiculoCard.innerHTML = `
+                <h3 class="veiculo-titulo">${veiculo.modelo} <span>(${veiculo.placa})</span></h3>
+                <p><strong>Cor:</strong> ${veiculo.cor}</p>
+                <p><strong>Tipo:</strong> ${veiculo.tipo}</p>
+            `;
+
+            veiculosContainer.appendChild(veiculoCard);
+        });
     } catch (error) {
-        return res.status(500).json({ error: 'Erro ao salvar checkin' });
+        console.error("Erro ao buscar os veículos:", error);
     }
-}
+});
 
 
 
+// *******************************************************
 
+document.getElementById("btn-salvar").addEventListener("click", async (event) => {
+    // Prevenir o comportamento padrão do botão, caso necessário
+    event.preventDefault();
 
+    // Obtendo os valores dos campos do formulário
+    const placa = document.getElementById("placa").value;
+    const modelo = document.getElementById("modelo").value;
+    const cor = document.getElementById("cor").value;
+    const tipo = document.getElementById("tipo").value;
+    
+    // O número da vaga será sempre 1
+    const numeroVaga = 1;
 
-module.exports = {
-    rotaCheckin,
-    checkin
-}
+    // Enviar os dados para o servidor
+    const response = await fetch('http://localhost:3005/veiculos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            placa, modelo, cor, tipo, numeroVaga
+        })
+    });
+
+    const data = await response.json();
+    console.log(data);
+    
+    if (data.success) {
+        alert('Veículo cadastrado com sucesso!');
+        
+        //Limpar o formulário após o cadastro
+        document.getElementById("formulario-veiculos").reset();
+    } else {
+        alert('Erro ao cadastrar o veículo.');
+    }
+});
