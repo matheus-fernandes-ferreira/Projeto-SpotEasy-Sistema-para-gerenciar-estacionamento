@@ -7,29 +7,39 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Modelo para o veículo
+model Estacionamento {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  totalVagas  Int
+  vagasPorTipo Json
+  vagas       Vaga[]
+}
+
+model Vaga {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  numero          String
+  tipo            String
+  status          String
+  veiculoId       String? @db.ObjectId
+  estacionamentoId String @db.ObjectId
+  estacionamento  Estacionamento @relation(fields: [estacionamentoId], references: [id])
+}
+
 model Veiculo {
-  id     String   @id @default(auto()) @map("_id") @db.ObjectId // Definindo como ObjectId no MongoDB
-  placa  String   @unique
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  placa  String @unique
   modelo String
   cor    String
   tipo   String
-
-  // Relacionamento com o modelo Estacionamento
-  entradas Estacionamento[]
+  checkins Checkin[]
 }
 
-// Modelo para o registro de estacionamento (entrada e saída)
-model Estacionamento {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId // Definindo como ObjectId no MongoDB
-  veiculoId    String   @db.ObjectId
-  data_entrada DateTime
-  hora_entrada String
-  data_saida   DateTime?
-  hora_saida   String?
-  numero_vaga  String
-  status       String   @default("ocupado")
-
-  // Definindo o relacionamento com o veículo
-  veiculo Veiculo @relation(fields: [veiculoId], references: [id])
+model Checkin {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  veiculoId  String @db.ObjectId
+  vagaId     String @db.ObjectId
+  dataEntrada DateTime
+  horaEntrada DateTime
+  dataSaida   DateTime?
+  horaSaida   DateTime?
+  veiculo     Veiculo @relation(fields: [veiculoId], references: [id])
 }
