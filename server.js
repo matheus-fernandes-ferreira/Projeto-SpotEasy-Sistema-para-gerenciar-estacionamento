@@ -1,6 +1,6 @@
-import express from "express";
-import { PrismaClient } from "@prisma/client";
-import cors from "cors";
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
 
 const prisma = new PrismaClient();
 const app = express();
@@ -23,7 +23,7 @@ app.post('/veiculos', async (req, res) => {
         });
         res.status(201).json(veiculo);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao criar veículo." });
+        res.status(400).json({ error: 'Erro ao criar veículo.' });
     }
 });
 
@@ -31,11 +31,11 @@ app.post('/veiculos', async (req, res) => {
 app.get('/veiculos', async (req, res) => {
     try {
         const veiculos = await prisma.veiculo.findMany({
-            include: { checkins: true },
+            include: { checkins: true }, // Inclui os check-ins se necessário
         });
         res.status(200).json(veiculos);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao listar veículos." });
+        res.status(400).json({ error: 'Erro ao listar veículos.' });
     }
 });
 
@@ -53,7 +53,7 @@ app.put('/veiculos/:id', async (req, res) => {
         });
         res.status(200).json(veiculo);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao atualizar veículo." });
+        res.status(400).json({ error: 'Erro ao atualizar veículo.' });
     }
 });
 
@@ -63,9 +63,9 @@ app.delete('/veiculos/:id', async (req, res) => {
         await prisma.veiculo.delete({
             where: { id: req.params.id },
         });
-        res.status(200).json({ message: "Veículo deletado com sucesso." });
+        res.status(200).json({ message: 'Veículo deletado com sucesso.' });
     } catch (error) {
-        res.status(400).json({ error: "Erro ao deletar veículo." });
+        res.status(400).json({ error: 'Erro ao deletar veículo.' });
     }
 });
 
@@ -82,10 +82,9 @@ app.post('/estacionamento/configuracao', async (req, res) => {
         });
         res.status(201).json(estacionamento);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao salvar configurações do estacionamento." });
+        res.status(400).json({ error: 'Erro ao salvar configurações do estacionamento.' });
     }
 });
-
 
 // Listar estacionamentos
 app.get('/estacionamento/configuracao', async (req, res) => {
@@ -93,7 +92,7 @@ app.get('/estacionamento/configuracao', async (req, res) => {
         const estacionamentos = await prisma.estacionamento.findMany();
         res.status(200).json(estacionamentos);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao listar estacionamentos." });
+        res.status(400).json({ error: 'Erro ao listar estacionamentos.' });
     }
 });
 
@@ -101,7 +100,7 @@ app.get('/estacionamento/configuracao', async (req, res) => {
 app.put('/estacionamento/configuracao/:id', async (req, res) => {
     try {
         const estacionamento = await prisma.estacionamento.update({
-            where: { id: parseInt(req.params.id) }, // O ID será passado pela URL
+            where: { id: req.params.id },
             data: {
                 totalVagas: req.body.totalVagas,
                 vagasPorTipo: req.body.vagasPorTipo,
@@ -109,20 +108,19 @@ app.put('/estacionamento/configuracao/:id', async (req, res) => {
         });
         res.status(200).json(estacionamento);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao atualizar configurações do estacionamento." });
+        res.status(400).json({ error: 'Erro ao atualizar configurações do estacionamento.' });
     }
 });
 
 // Deletar estacionamento
 app.delete('/estacionamento/configuracao/:id', async (req, res) => {
     try {
-        const { id } = req.params;
         const estacionamento = await prisma.estacionamento.delete({
-            where: { id: id },
+            where: { id: req.params.id },
         });
-        res.status(200).json({ message: "Estacionamento deletado com sucesso." });
+        res.status(200).json({ message: 'Estacionamento deletado com sucesso.' });
     } catch (error) {
-        res.status(400).json({ error: "Erro ao deletar estacionamento." });
+        res.status(400).json({ error: 'Erro ao deletar estacionamento.' });
     }
 });
 
@@ -131,107 +129,84 @@ app.delete('/estacionamento/configuracao/:id', async (req, res) => {
 // Endpoint para criar as vagas no banco de dados
 app.post('/criarVagas', async (req, res) => {
     try {
-      // Buscar o estacionamento
-      const estacionamento = await prisma.estacionamento.findUnique({
-        where: { id: req.body.estacionamentoId }, // ID do estacionamento passado no corpo da requisição
-      });
-  
-      if (!estacionamento) {
-        return res.status(404).json({ error: "Estacionamento não encontrado." });
-      }
-  
-      const totalVagas = estacionamento.totalVagas;
-      const vagasPorTipo = estacionamento.vagasPorTipo; // Exemplo: { "carro": 10, "moto": 5 }
-  
-      // Criação das vagas
-      let numeroVaga = 1;
-      let vagasCriadas = [];
-  
-      // Gerar vagas para cada tipo de veículo
-      for (const tipo in vagasPorTipo) {
-        const quantidadePorTipo = vagasPorTipo[tipo];
-  
-        for (let i = 0; i < quantidadePorTipo; i++) {
-          const vaga = await prisma.vaga.create({
-            data: {
-              numero: numeroVaga.toString(),
-              tipo: tipo,
-              status: "livre",  // Inicializa a vaga como livre
-              estacionamentoId: estacionamento.id,  // A vaga pertence a este estacionamento
-            },
-          });
-          vagasCriadas.push(vaga);
-          numeroVaga++;
+        // Buscar o estacionamento
+        const estacionamento = await prisma.estacionamento.findUnique({
+            where: { id: req.body.estacionamentoId },
+        });
+
+        if (!estacionamento) {
+            return res.status(404).json({ error: 'Estacionamento não encontrado.' });
         }
-      }
-  
-      // Retornar as vagas criadas
-      res.status(201).json(vagasCriadas);
+
+        const vagasPorTipo = estacionamento.vagasPorTipo;
+
+        // Criação das vagas
+        let numeroVaga = 1;
+        let vagasCriadas = [];
+
+        // Gerar vagas para cada tipo de veículo
+        for (const tipo in vagasPorTipo) {
+            const quantidadePorTipo = vagasPorTipo[tipo];
+
+            for (let i = 0; i < quantidadePorTipo; i++) {
+                const vaga = await prisma.vaga.create({
+                    data: {
+                        numero: numeroVaga.toString(),
+                        tipo: tipo,
+                        status: 'livre',  // Inicializa a vaga como livre
+                        estacionamentoId: estacionamento.id,  // A vaga pertence a este estacionamento
+                    },
+                });
+                vagasCriadas.push(vaga);
+                numeroVaga++;
+            }
+        }
+
+        // Retornar as vagas criadas
+        res.status(201).json(vagasCriadas);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Erro ao criar as vagas." });
+        res.status(500).json({ error: 'Erro ao criar as vagas.' });
     }
-  });
-
-  
-
-// Listar vagas
-// app.get('/vagas', async (req, res) => {
-//     try {
-//         const vagas = await prisma.vaga.findMany({
-//             include: { estacionamento: true },
-//         });
-//         res.status(200).json(vagas);
-//     } catch (error) {
-//         res.status(400).json({ error: "Erro ao listar vagas." });
-//     }
-// });
-
-// // Atualizar vaga
-// app.put('/vagas/:id', async (req, res) => {
-//     try {
-//         const vaga = await prisma.vaga.update({
-//             where: { id: req.params.id },
-//             data: {
-//                 numero: req.body.numero,
-//                 tipo: req.body.tipo,
-//                 status: req.body.status,
-//             },
-//         });
-//         res.status(200).json(vaga);
-//     } catch (error) {
-//         res.status(400).json({ error: "Erro ao atualizar vaga." });
-//     }
-// });
-
-// // Deletar vaga
-// app.delete('/vagas/:id', async (req, res) => {
-//     try {
-//         await prisma.vaga.delete({
-//             where: { id: req.params.id },
-//         });
-//         res.status(200).json({ message: "Vaga deletada com sucesso." });
-//     } catch (error) {
-//         res.status(400).json({ error: "Erro ao deletar vaga." });
-//     }
-// });
+});
 
 // ===================== CHECKIN =====================
 
 // Criar check-in
 app.post('/checkins', async (req, res) => {
     try {
-        const checkin = await prisma.checkin.create({
-            data: {
-                veiculoId: req.body.veiculoId,
-                vagaId: req.body.vagaId,
-                dataEntrada: new Date(req.body.dataEntrada),
-                horaEntrada: new Date(req.body.horaEntrada),
+        const { tipoVeiculo, veiculoId, dataEntrada, horaEntrada } = req.body;
+
+        // Buscar a primeira vaga livre que seja compatível com o tipo de veículo
+        const vaga = await prisma.vaga.findFirst({
+            where: {
+                status: 'livre',  // A vaga precisa estar livre
+                tipo: tipoVeiculo,  // A vaga precisa ser do tipo do veículo
             },
         });
+
+        if (!vaga) {
+            return res.status(404).json({ error: 'Não há vagas disponíveis para este tipo de veículo.' });
+        }
+
+        // Criar o check-in
+        const checkin = await prisma.checkin.create({
+            data: {
+                veiculoId,
+                vagaId: vaga.id,
+                dataEntrada: new Date(dataEntrada),
+                horaEntrada: new Date(horaEntrada),
+            },
+        });
+
+        // Atualizar o status da vaga para "ocupada"
+        await prisma.vaga.update({
+            where: { id: vaga.id },
+            data: { status: 'ocupada' },
+        });
+
         res.status(201).json(checkin);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao criar check-in." });
+        res.status(400).json({ error: 'Erro ao criar check-in.' });
     }
 });
 
@@ -243,11 +218,11 @@ app.get('/checkins', async (req, res) => {
         });
         res.status(200).json(checkins);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao listar check-ins." });
+        res.status(400).json({ error: 'Erro ao listar check-ins.' });
     }
 });
 
-// Atualizar check-in
+// Atualizar check-in (check-out)
 app.put('/checkins/:id', async (req, res) => {
     try {
         const checkin = await prisma.checkin.update({
@@ -257,30 +232,43 @@ app.put('/checkins/:id', async (req, res) => {
                 horaSaida: req.body.horaSaida ? new Date(req.body.horaSaida) : null,
             },
         });
+
+        // Atualizar o status da vaga para "livre" após o check-out
+        await prisma.vaga.update({
+            where: { id: checkin.vagaId },
+            data: { status: 'livre' },
+        });
+
         res.status(200).json(checkin);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao atualizar check-in." });
+        res.status(400).json({ error: 'Erro ao atualizar check-in.' });
     }
 });
 
 // Deletar check-in
 app.delete('/checkins/:id', async (req, res) => {
     try {
+        const checkin = await prisma.checkin.findUnique({
+            where: { id: req.params.id },
+        });
+
+        if (checkin) {
+            await prisma.vaga.update({
+                where: { id: checkin.vagaId },
+                data: { status: 'livre' },
+            });
+        }
+
         await prisma.checkin.delete({
             where: { id: req.params.id },
         });
-        res.status(200).json({ message: "Check-in deletado com sucesso." });
+
+        res.status(200).json({ message: 'Check-in deletado com sucesso.' });
     } catch (error) {
-        res.status(400).json({ error: "Erro ao deletar check-in." });
+        res.status(400).json({ error: 'Erro ao deletar check-in.' });
     }
 });
 
 app.listen(3005, () => {
-    console.log("Servidor rodando na porta 3005.");
+    console.log('Servidor rodando na porta 3005.');
 });
-
-
-
-//https://www.youtube.com/watch?v=PyrMT0GA3sE
-//https://www.youtube.com/watch?v=_gHr2Pe5LCY
-//extensão Thunder client para testar as rotas
