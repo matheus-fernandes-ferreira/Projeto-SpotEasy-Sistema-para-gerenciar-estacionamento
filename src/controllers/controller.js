@@ -122,9 +122,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-
-
-
 //Excluindo os dados das configuracoes
 document.addEventListener("DOMContentLoaded", () => {
     // Adicionando evento de clique no botão "btn-excluirConfiguracoes"
@@ -133,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
 
         // Obter o ID do estacionamento que será excluído (por exemplo, de um campo de input ou um atributo de dados)
-        const estacionamentoId = '673a04bfdf70c2a812e3f848'
+        const estacionamentoId = '673a120612d00057c4a35b7d'
 
         if (!estacionamentoId) {
             alert("ID do estacionamento não fornecido.");
@@ -155,6 +152,24 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Erro ao excluir as configurações. Tente novamente mais tarde.");
         }
     });
+});
+
+// **************************VAGAS*****************************
+
+document.getElementById('btn-criarMapa').addEventListener('click', async function() {
+    try {
+        // Enviar a requisição para o back-end para criar as vagas
+        const response = await axios.post('http://localhost:3005/criarVagas', {
+            estacionamentoId: '673b85eb195146f4c1b74043' // Passe o ID do estacionamento aqui
+        });
+
+        // Exibir a resposta do back-end
+        console.log('Vagas criadas:', response.data);
+        alert('Vagas criadas com sucesso!');
+    } catch (error) {
+        console.error('Erro ao criar vagas:', error);
+        alert('Erro ao criar vagas.');
+    }
 });
 
 // *******************************************************

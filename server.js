@@ -128,63 +128,93 @@ app.delete('/estacionamento/configuracao/:id', async (req, res) => {
 
 // ===================== VAGA =====================
 
-// Criar vaga
-app.post('/vagas', async (req, res) => {
+// Endpoint para criar as vagas no banco de dados
+app.post('/criarVagas', async (req, res) => {
     try {
-        const vaga = await prisma.vaga.create({
+      // Buscar o estacionamento
+      const estacionamento = await prisma.estacionamento.findUnique({
+        where: { id: req.body.estacionamentoId }, // ID do estacionamento passado no corpo da requisição
+      });
+  
+      if (!estacionamento) {
+        return res.status(404).json({ error: "Estacionamento não encontrado." });
+      }
+  
+      const totalVagas = estacionamento.totalVagas;
+      const vagasPorTipo = estacionamento.vagasPorTipo; // Exemplo: { "carro": 10, "moto": 5 }
+  
+      // Criação das vagas
+      let numeroVaga = 1;
+      let vagasCriadas = [];
+  
+      // Gerar vagas para cada tipo de veículo
+      for (const tipo in vagasPorTipo) {
+        const quantidadePorTipo = vagasPorTipo[tipo];
+  
+        for (let i = 0; i < quantidadePorTipo; i++) {
+          const vaga = await prisma.vaga.create({
             data: {
-                numero: req.body.numero,
-                tipo: req.body.tipo,
-                status: req.body.status,
-                estacionamentoId: req.body.estacionamentoId,
+              numero: numeroVaga.toString(),
+              tipo: tipo,
+              status: "livre",  // Inicializa a vaga como livre
+              estacionamentoId: estacionamento.id,  // A vaga pertence a este estacionamento
             },
-        });
-        res.status(201).json(vaga);
+          });
+          vagasCriadas.push(vaga);
+          numeroVaga++;
+        }
+      }
+  
+      // Retornar as vagas criadas
+      res.status(201).json(vagasCriadas);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao criar vaga." });
+      console.error(error);
+      res.status(500).json({ error: "Erro ao criar as vagas." });
     }
-});
+  });
+
+  
 
 // Listar vagas
-app.get('/vagas', async (req, res) => {
-    try {
-        const vagas = await prisma.vaga.findMany({
-            include: { estacionamento: true },
-        });
-        res.status(200).json(vagas);
-    } catch (error) {
-        res.status(400).json({ error: "Erro ao listar vagas." });
-    }
-});
+// app.get('/vagas', async (req, res) => {
+//     try {
+//         const vagas = await prisma.vaga.findMany({
+//             include: { estacionamento: true },
+//         });
+//         res.status(200).json(vagas);
+//     } catch (error) {
+//         res.status(400).json({ error: "Erro ao listar vagas." });
+//     }
+// });
 
-// Atualizar vaga
-app.put('/vagas/:id', async (req, res) => {
-    try {
-        const vaga = await prisma.vaga.update({
-            where: { id: req.params.id },
-            data: {
-                numero: req.body.numero,
-                tipo: req.body.tipo,
-                status: req.body.status,
-            },
-        });
-        res.status(200).json(vaga);
-    } catch (error) {
-        res.status(400).json({ error: "Erro ao atualizar vaga." });
-    }
-});
+// // Atualizar vaga
+// app.put('/vagas/:id', async (req, res) => {
+//     try {
+//         const vaga = await prisma.vaga.update({
+//             where: { id: req.params.id },
+//             data: {
+//                 numero: req.body.numero,
+//                 tipo: req.body.tipo,
+//                 status: req.body.status,
+//             },
+//         });
+//         res.status(200).json(vaga);
+//     } catch (error) {
+//         res.status(400).json({ error: "Erro ao atualizar vaga." });
+//     }
+// });
 
-// Deletar vaga
-app.delete('/vagas/:id', async (req, res) => {
-    try {
-        await prisma.vaga.delete({
-            where: { id: req.params.id },
-        });
-        res.status(200).json({ message: "Vaga deletada com sucesso." });
-    } catch (error) {
-        res.status(400).json({ error: "Erro ao deletar vaga." });
-    }
-});
+// // Deletar vaga
+// app.delete('/vagas/:id', async (req, res) => {
+//     try {
+//         await prisma.vaga.delete({
+//             where: { id: req.params.id },
+//         });
+//         res.status(200).json({ message: "Vaga deletada com sucesso." });
+//     } catch (error) {
+//         res.status(400).json({ error: "Erro ao deletar vaga." });
+//     }
+// });
 
 // ===================== CHECKIN =====================
 
