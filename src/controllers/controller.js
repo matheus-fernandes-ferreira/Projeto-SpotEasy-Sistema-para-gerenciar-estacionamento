@@ -189,23 +189,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Função para carregar os dados dos veículos na tabela
 document.addEventListener("DOMContentLoaded", async () => {
-    const apiUrl = 'http://localhost:3005/veiculos';  // Ajuste para a URL correta do backend
+    const apiUrl = 'http://localhost:3005/veiculos';
 
-    // Função para carregar os veículos na tabela
+    // Função para carregar os dados dos veículos na tabela
     async function carregarVeiculos() {
         try {
-            // Requisição à API para obter os veículos
             const resposta = await axios.get(apiUrl);
             const veiculos = resposta.data;
 
-            // Obtendo a referência da tabela
             const tabelaVeiculos = document.getElementById('tabelaVeiculos');
             tabelaVeiculos.innerHTML = ''; // Limpa a tabela antes de inserir novos dados
 
-            // Adicionando a linha de cabeçalho (se necessário)
+            // Linha de cabeçalho
             const cabecalho = document.createElement('tr');
             cabecalho.innerHTML = `
-                
+                <th>ID</th>
                 <th>Placa</th>
                 <th>Modelo</th>
                 <th>Cor</th>
@@ -214,45 +212,132 @@ document.addEventListener("DOMContentLoaded", async () => {
             `;
             tabelaVeiculos.appendChild(cabecalho);
 
-            // Adicionando os dados dos veículos
+            // Adicionando os veículos na tabela
             veiculos.forEach(veiculo => {
                 const linha = document.createElement('tr');
                 linha.innerHTML = `
-                    
+                    <td>${veiculo.id}</td>
                     <td>${veiculo.placa}</td>
                     <td>${veiculo.modelo}</td>
                     <td>${veiculo.cor}</td>
                     <td>${veiculo.tipo}</td>
                     <td>
-                        <button onclick="editarVeiculo(${veiculo.id})">Editar</button>
-                        <button onclick="deletarVeiculo(${veiculo.id})">Deletar</button>
+                        <button class="editar-btn" data-id="${veiculo.id}">Editar</button>
+                        <button class="deletar-btn" data-id="${veiculo.id}">Deletar</button>
                     </td>
                 `;
                 tabelaVeiculos.appendChild(linha);
             });
+
+            // Adicionar eventos aos botões após a tabela ser preenchida
+            adicionarEventosBotoes();
         } catch (error) {
             console.error('Erro ao carregar os veículos:', error);
         }
     }
 
-    // Função para editar um veículo (exemplo simples, você pode expandir conforme necessário)
-    function editarVeiculo(id) {
-        alert(`Editar veículo com ID: ${id}`);
-        // Aqui você pode adicionar lógica para abrir um formulário de edição ou redirecionar para outra página
+    // Função para adicionar eventos aos botões de editar e deletar
+    function adicionarEventosBotoes() {
+        // Botões de deletar
+        const botoesDeletar = document.querySelectorAll('.deletar-btn');
+        botoesDeletar.forEach(botao => {
+            botao.addEventListener('click', async (event) => {
+                const id = event.target.getAttribute('data-id');
+                try {
+                    await axios.delete(`http://localhost:3005/veiculos/${id}`);
+                    alert(`Veículo com ID: ${id} foi deletado.`);
+                    carregarVeiculos(); // Recarrega os dados
+                } catch (error) {
+                    console.error('Erro ao deletar o veículo:', error);
+                    alert('Erro ao tentar deletar o veículo.');
+                    // Chama a função para carregar os veículos ao carregar a página
+                    carregarVeiculos();
+                }
+            });
+        });
+
+        // Botões de editar
+        const botoesEditar = document.querySelectorAll('.editar-btn');
+        botoesEditar.forEach(botao => {
+            botao.addEventListener('click', async (event) => {
+                const id = event.target.getAttribute('data-id');
+
+                // Buscar as informações do veículo
+                try {
+                    const resposta = await axios.get(`${apiUrl}/${id}`);
+                    const veiculo = resposta.data;
+
+                    // Criar o formulário de edição
+                    const formularioEdicao = document.createElement('div');
+                    formularioEdicao.id = 'formulario-edicao';
+                    formularioEdicao.style.position = 'fixed';
+                    formularioEdicao.style.top = '50%';
+                    formularioEdicao.style.left = '50%';
+                    formularioEdicao.style.transform = 'translate(-50%, -50%)';
+                    formularioEdicao.style.backgroundColor = '#fff';
+                    formularioEdicao.style.padding = '20px';
+                    formularioEdicao.style.borderRadius = '8px';
+                    formularioEdicao.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+                    formularioEdicao.style.zIndex = '1000';
+
+                    formularioEdicao.innerHTML = `
+                        <h3>Editar Veículo</h3>
+                        <label for="placa">Placa:</label>
+                        <input type="text" id="placa" value="${veiculo.placa}" required /><br/><br/>
+                        
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" id="modelo" value="${veiculo.modelo}" required /><br/><br/>
+                        
+                        <label for="cor">Cor:</label>
+                        <input type="text" id="cor" value="${veiculo.cor}" required /><br/><br/>
+                        
+                        <label for="tipo">Tipo:</label>
+                        <input type="text" id="tipo" value="${veiculo.tipo}" required /><br/><br/>
+                        
+                        <button id="btn-salvar-edicao">Salvar</button>
+                        <button id="btn-cancelar-edicao">Cancelar</button>
+                    `;
+                    document.body.appendChild(formularioEdicao);
+
+                    // Botão de salvar a edição
+                    document.getElementById('btn-salvar-edicao').addEventListener('click', async () => {
+                        const placa = document.getElementById('placa').value;
+                        const modelo = document.getElementById('modelo').value;
+                        const cor = document.getElementById('cor').value;
+                        const tipo = document.getElementById('tipo').value;
+
+                        // Enviar os dados para atualização
+                        try {
+                            const respostaEdicao = await axios.put(`${apiUrl}/${id}`, {
+                                placa,
+                                modelo,
+                                cor,
+                                tipo
+                            });
+                            if (respostaEdicao.status === 200) {
+                                alert('Veículo editado com sucesso!');
+                                carregarVeiculos(); // Recarrega os veículos
+                                document.body.removeChild(formularioEdicao); // Remove o formulário
+                            }
+                        } catch (error) {
+                            console.error('Erro ao editar o veículo:', error);
+                            alert('Erro ao tentar editar o veículo.');
+                        }
+                    });
+
+                    // Botão de cancelar a edição
+                    document.getElementById('btn-cancelar-edicao').addEventListener('click', () => {
+                        document.body.removeChild(formularioEdicao); // Remove o formulário
+                    });
+                } catch (error) {
+                    console.error('Erro ao buscar as informações do veículo:', error);
+                    alert('Erro ao tentar editar o veículo.');
+                }
+            });
+        });
     }
 
-    // Função para deletar um veículo
-    async function deletarVeiculo(id) {
-        try {
-            await axios.delete(`http://localhost:3005/veiculos/${id}`);  // Ajuste a URL conforme necessário
-            alert(`Veículo com ID: ${id} foi deletado`);
-            carregarVeiculos(); // Recarrega os dados após a exclusão
-        } catch (error) {
-            console.error('Erro ao deletar o veículo:', error);
-            alert('Erro ao tentar deletar o veículo');
-        }
-    }
-
-    // Chama a função para carregar os veículos quando a página for carregada
+    // Chama a função para carregar os veículos ao carregar a página
     carregarVeiculos();
 });
+

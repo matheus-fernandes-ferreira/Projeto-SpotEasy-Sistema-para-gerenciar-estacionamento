@@ -39,35 +39,68 @@ app.get('/veiculos', async (req, res) => {
     }
 });
 
-// Atualizar veículo
+
+// Rota para editar um veículo pelo ID
 app.put('/veiculos/:id', async (req, res) => {
+    const { id } = req.params;
+    const { placa, modelo, cor, tipo } = req.body;
+
     try {
-        const veiculo = await prisma.veiculo.update({
-            where: { id: req.params.id },
+        // Verifica se o veículo existe antes de editar
+        const veiculoExistente = await prisma.veiculo.findUnique({
+            where: { id },
+        });
+
+        if (!veiculoExistente) {
+            return res.status(404).json({ error: 'Veículo não encontrado' });
+        }
+
+        // Atualiza os dados do veículo
+        const veiculoAtualizado = await prisma.veiculo.update({
+            where: { id },
             data: {
-                placa: req.body.placa,
-                modelo: req.body.modelo,
-                cor: req.body.cor,
-                tipo: req.body.tipo,
+                placa: placa || veiculoExistente.placa,
+                modelo: modelo || veiculoExistente.modelo,
+                cor: cor || veiculoExistente.cor,
+                tipo: tipo || veiculoExistente.tipo,
             },
         });
-        res.status(200).json(veiculo);
+
+        res.status(200).json({ message: 'Veículo atualizado com sucesso.', veiculo: veiculoAtualizado });
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao atualizar veículo.' });
+        console.error('Erro ao editar veículo:', error);
+        res.status(500).json({ error: 'Erro ao editar veículo.' });
     }
 });
 
-// Deletar veículo
+
+
+// Rota para deletar um veículo pelo ID
 app.delete('/veiculos/:id', async (req, res) => {
+    const { id } = req.params;
+
     try {
-        await prisma.veiculo.delete({
-            where: { id: req.params.id },
+        // Verifica se o veículo existe antes de deletar
+        const veiculoExistente = await prisma.veiculo.findUnique({
+            where: { id },
         });
-        res.status(200).json({ message: 'Veículo deletado com sucesso.' });
+
+        if (!veiculoExistente) {
+            return res.status(404).json({ error: 'Veículo não encontrado' });
+        }
+
+        // Deleta o veículo
+        await prisma.veiculo.delete({
+            where: { id },
+        });
+
+        res.status(200).json({ message: 'Veículo deletado com sucesso' });
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao deletar veículo.' });
+        console.error('Erro ao deletar veículo:', error);
+        res.status(500).json({ error: 'Erro ao deletar veículo' });
     }
 });
+
 
 // ===================== ESTACIONAMENTO =====================
 
