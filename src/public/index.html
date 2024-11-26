@@ -21,9 +21,8 @@
   <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script defer src="../public/assets/js/exportarCSV.js"></script>
   <script defer src="../public/assets/js/script-mapa.js"></script>
-  <script defer src="../controllers/controller.js"></script>
-
   <script defer src="./assets/js/script.js"></script>
+  <script defer src="../controllers/controller.js"></script>
 
 
 
@@ -90,7 +89,7 @@
               <div class="quadros" id="q1">
                 <h3 id="texto-ocupacao"> </h3>
                 <div id="taxa-ocupacao">
-                  <h3>Taxa de ocupação</h3>
+                  Taxa de ocupação
                 </div>
               </div>
 
@@ -191,7 +190,7 @@
                     <br>
 
                     <div class="form-actions">
-                      <button class="btn btn-form btn-primary" id="btn-salvar">Salvar</button>
+                      <button class="btn btn-form btn-primary" id="btn-checkin">Salvar</button>
                     </div>
                   </form>
 
@@ -358,68 +357,70 @@
 
               <div id="gral">
                 <div class="container-info">
-                  <div class="config-info">
-                    <div class="container">
-                      <h3>Informações gerais</h3>
-                      <div id="config-mapa">
-                        <label for="vagasMotos">Vagas para Motos:</label>
-                        <input type="number" class="form-control" id="vagasMotos" min="1">
-                      </div>
-                      <div id="config-mapa">
-                        <label for="vagasCarros">Vagas para Carros:</label>
-                        <input type="number" class="form-control" id="vagasCarros" min="1">
-                      </div>
-                      <div id="config-mapa">
-                        <label for="vagasMicro">Vagas para Micro-ônibus:</label>
-                        <input type="number" class="form-control" id="vagasMicro" min="1">
-                      </div>
 
-                      <div class="pane" id="pane-mapa">
-                        <div class="container">
-                          <h3></h3>
-                          <div id="config-mapa">
-                            <label id="total-vagas"> </label>
-
-                            <label id="vagas-livres"> </label>
-
-                            <label id="vagas-ocupadas"> </label>
-
-                            <label id="taxaocupacao"> Taxa de ocupação</label>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="container">
+                    <h3>Informações gerais</h3>
+                    <div id="config-mapa">
+                      <label for="vagasMotos">Vagas para Motos:</label>
+                      <input type="number" class="form-control" id="vagasMotos" min="1">
+                    </div>
+                    <div id="config-mapa">
+                      <label for="vagasCarros">Vagas para Carros:</label>
+                      <input type="number" class="form-control" id="vagasCarros" min="1">
+                    </div>
+                    <div id="config-mapa">
+                      <label for="vagasMicro">Vagas para Micro-ônibus:</label>
+                      <input type="number" class="form-control" id="vagasMicro" min="1">
                     </div>
                   </div>
 
                 </div>
-              </div>
 
-              <button class="btn btn-form btn-primary" id="btn-salvarConfiguracoes">Salvar</button>
-              <button class="btn btn-form btn-primary" id="btn-criarMapa">Criar Mapa</button>
-              <button class="btn btn-form btn-primary" id="btn-excluirConfiguracoes">Excluir configuracoes</button>
-              <div class="mapa" id="mapa"></div>
+                <div class="container-info">
 
-              <div class="mapa" id="mapa">
+                  <div class="container">
+                    <h3>Mapa de Vagas</h3>
+                    <div id="config-mapa">
+                      <h5 id="total-vagas"></h5>
+                      <h5 id="vagas-livres"></h5>
+                      <h5 id="vagas-ocupadas"></h5>
+                      <h5 id="taxaocupacao"></h5>
+
+
+                    </div>
+                  </div>
+                </div>
+
 
               </div>
             </div>
 
-          </section>
+            <button class="btn btn-form btn-primary" id="btn-salvarConfiguracoes">Salvar</button>
+            <button class="btn btn-form btn-primary" id="btn-criarMapa">Criar Mapa</button>
+            <button class="btn btn-form btn-primary" id="btn-excluirConfiguracoes">Excluir configuracoes</button>
+            <div class="mapa" id="mapa"></div>
 
+            <div class="mapa" id="mapa">
 
-
-
-
+            </div>
         </div>
+
+        </section>
+
+
+
+
+
       </div>
     </div>
+  </div>
 
 
 
 
-    <footer class="toolbar toolbar-footer">
-      <h1 class="title">Desenvolvido por Matheus Fernandes</h1>
-    </footer>
+  <footer class="toolbar toolbar-footer">
+    <h1 class="title">Desenvolvido por Matheus Fernandes</h1>
+  </footer>
   </div>
 </body>
 

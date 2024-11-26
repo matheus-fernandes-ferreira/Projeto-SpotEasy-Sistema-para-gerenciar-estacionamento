@@ -1,6 +1,3 @@
-// const { dialog, app } = require('electron');
-// const fs = require('fs');
-
 
 function exportarParaCSV() {
     const tabela = document.getElementById('tabelaVeiculos');
@@ -34,29 +31,8 @@ function exportarParaCSV() {
     link.click();
     URL.revokeObjectURL(url);
 
-//========================funcionar para electron
-    // // Obter o diretório de documentos do usuário
-    // const documentos = app.getPath('documents');
 
-    // // Mostrar um diálogo para o usuário escolher o nome do arquivo
-    // dialog.showSaveDialog({
-    //     defaultPath: path.join(documentos, 'dados_veiculos.csv'),
-    //     filters: [{ name: 'CSV', extensions: ['csv'] }]
-    // }).then(result => {
-    //     if (result.canceled) return;
-
-    //     const filePath = result.filePath;
-
-    //     fs.writeFile(filePath, csvContent, (err) => {
-    //         if (err) {
-    //             console.error('Erro ao salvar o arquivo:', err);
-    //         } else {
-    //             console.log('Arquivo CSV salvo com sucesso!');
-    //         }
-    //     });
-    // });
 }
-
   
 
 // Adicionar um event listener ao botão de exportar

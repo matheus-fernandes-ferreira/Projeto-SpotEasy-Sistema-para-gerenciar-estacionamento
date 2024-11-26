@@ -115,19 +115,26 @@ html {
 
 
 /*=================MAPA=================*/
+
+#gral{
+    display: flex;
+    flex-direction: row;
+}
+
 .pane-mapa{
     display: flex;
     flex-direction: column;
 }
-#gral{
-    display: flex;
-}
 .container-info {
     display: flex;
+    flex-direction: column;
+    width: 80%;
+
 }
 
 .container {
     width: 100%;
+    height: 100%;
     padding: 20px;
 }
 
@@ -143,6 +150,7 @@ html {
 
 .config-info{
     display: flex;
+    background-color: red;
 }
 
 

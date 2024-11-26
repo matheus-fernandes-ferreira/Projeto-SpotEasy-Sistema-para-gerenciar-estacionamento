@@ -119,6 +119,36 @@ app.post('/estacionamento/configuracao', async (req, res) => {
     }
 });
 
+app.get('/vagas/status', async (req, res) => {
+    try {
+        console.log('Buscando total de vagas...');
+        const totalVagas = await prisma.vaga.count();
+
+        console.log('Buscando vagas livres...');
+        const vagasLivres = await prisma.vaga.count({
+            where: { status: 'livre' },
+        });
+
+        console.log('Calculando vagas ocupadas...');
+        const vagasOcupadas = totalVagas - vagasLivres;
+
+        console.log('Calculando taxa de ocupação...');
+        const taxaOcupacao = totalVagas > 0 ? ((vagasOcupadas / totalVagas) * 100).toFixed(2) : 0;
+
+        console.log('Enviando resposta:', { totalVagas, vagasLivres, vagasOcupadas, taxaOcupacao });
+        res.status(200).json({
+            totalVagas,
+            vagasLivres,
+            vagasOcupadas,
+            taxaOcupacao,
+        });
+    } catch (error) {
+        console.error('Erro ao buscar informações de vagas:', error);
+        res.status(500).json({ error: 'Erro ao buscar informações de vagas.' });
+    }
+});
+
+
 // Listar estacionamentos
 app.get('/estacionamento/configuracao', async (req, res) => {
     try {
@@ -201,6 +231,49 @@ app.post('/criarVagas', async (req, res) => {
         res.status(500).json({ error: 'Erro ao criar as vagas.' });
     }
 });
+
+
+// Listar todas as vagas
+app.get('/vagas', async (req, res) => {
+    try {
+        // Busca todas as vagas
+        const vagas = await prisma.vaga.findMany();
+
+        // Retorna as vagas encontradas
+        res.status(200).json(vagas);
+    } catch (error) {
+        console.error('Erro ao listar todas as vagas:', error);
+        res.status(500).json({ error: 'Erro ao listar todas as vagas.' });
+    }
+});
+
+// Listar vagas por status
+app.get('/vagas/status/:status', async (req, res) => {
+    const { status } = req.params; // Obtém o status do parâmetro da URL
+
+    try {
+        // Busca as vagas pelo status
+        const vagas = await prisma.vaga.findMany({
+            where: {
+                status: status, // Filtra as vagas pelo status
+            },
+        });
+
+        // Verifica se há vagas com o status especificado
+        if (vagas.length === 0) {
+            return res.status(404).json({ message: 'Nenhuma vaga encontrada com o status especificado.' });
+        }
+
+        // Retorna as vagas encontradas
+        res.status(200).json(vagas);
+    } catch (error) {
+        console.error('Erro ao listar vagas por status:', error);
+        res.status(500).json({ error: 'Erro ao listar vagas por status.' });
+    }
+});
+
+
+
 
 // ===================== CHECKIN =====================
 
