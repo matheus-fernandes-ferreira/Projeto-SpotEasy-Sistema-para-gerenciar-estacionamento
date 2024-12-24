@@ -326,3 +326,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarVeiculos();
 });
 
+
+/*
+dESCOBRIR QUAL O PROCESSO ESTÁ EM USO
+tasklist | findstr node 
+
+SUBSTITUTIR O SEGUNDO PID PELO NUMERO DO PROCESSO
+taskkill /PID PID /F
+*/

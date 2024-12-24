@@ -4,14 +4,16 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { exec } from 'node:child_process';
+import { spawn } from 'node:child_process';
 
-let serverProcess; // Para manter a referência ao processo do servidor
+// Variável para manter a referência ao processo do servidor
+let serverProcess;
 
 // Obtém o diretório atual do arquivo usando import.meta.url
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Função para criar a janela principal do Electron
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -22,10 +24,10 @@ const createWindow = () => {
     },
   });
 
-  // and load the index.html of the app.
+  // Carrega o arquivo HTML da aplicação
   mainWindow.loadFile(path.join(__dirname, 'src/public/index.html'));
 
-  // Open the DevTools.
+  // Caso deseje abrir as ferramentas de desenvolvedor (comentado por padrão)
   // mainWindow.webContents.openDevTools();
 };
 
@@ -33,22 +35,28 @@ const createWindow = () => {
 const startServer = () => {
   console.log('Iniciando o servidor...');
 
-  serverProcess = exec('node server.js', {
+  // Executa o processo do servidor
+  serverProcess = spawn('node', ['server.js'], {
     cwd: path.resolve(), // Define o diretório de trabalho para o servidor
+    stdio: 'inherit', // Herda os streams da aplicação principal
   });
 
-  // Monitora a saída do servidor
-  serverProcess.stdout.on('data', (data) => {
-    console.log(`[Servidor] ${data}`);
+  // Escuta eventos de saída ou erros do servidor
+  serverProcess.on('exit', (code, signal) => {
+    console.log(`Servidor finalizado com código: ${code}, sinal: ${signal}`);
   });
 
-  serverProcess.stderr.on('data', (data) => {
-    console.error(`[Erro no Servidor] ${data}`);
+  serverProcess.on('error', (err) => {
+    console.error(`Erro no servidor: ${err}`);
   });
+};
 
-  serverProcess.on('close', (code) => {
-    console.log(`Servidor finalizado com código: ${code}`);
-  });
+// Função para encerrar o servidor Node.js
+const stopServer = () => {
+  if (serverProcess && !serverProcess.killed) {
+    console.log('Finalizando o servidor...');
+    serverProcess.kill('SIGTERM'); // Envia sinal para finalizar o servidor de forma controlada
+  }
 };
 
 // Este método será chamado quando o Electron finalizar a inicialização
@@ -66,12 +74,12 @@ app.whenReady().then(() => {
 // Finaliza o servidor quando todas as janelas são fechadas, exceto no macOS
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    if (serverProcess) {
-      console.log('Finalizando o servidor...');
-      serverProcess.kill(); // Finaliza o processo do servidor
-    }
-    app.quit();
+    stopServer(); // Encerra o servidor
+    app.quit(); // Encerra a aplicação Electron
   }
 });
 
-// Você pode incluir o restante do código específico do processo principal aqui.
+// Garante que o servidor seja finalizado antes de sair
+app.on('before-quit', () => {
+  stopServer();
+});
